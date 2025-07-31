@@ -65,6 +65,13 @@
     </li>
     <?php endforeach; ?>
   </ul>
+
+  <nav aria-label="Todo Pagination">
+  <ul class="pagination justify-content-center">
+    <?= $pager->links('default', 'custom_bootstrap') ?>
+  </ul>
+</nav>
+
 <?php else: ?>
   <div class="alert alert-info">No tasks found.</div>
 <?php endif; ?>

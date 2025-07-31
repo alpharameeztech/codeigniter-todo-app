@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Services\TodoService;
 use CodeIgniter\Controller;
+use App\Models\TodoModel;
 
 class Todo extends Controller
 {
@@ -16,13 +17,18 @@ class Todo extends Controller
     }
 
     public function index()
-    {
-        return view('todo/index', [
-            'todos' => $this->todo->getAll(),
-            'completedCount' => $this->todo->getStats()['completed'],
-            'pendingCount'   => $this->todo->getStats()['pending'],
-        ]);
-    }
+        {
+            $model = new TodoModel();
+
+            $data = [
+                'todos'          => $model->orderBy('id', 'DESC')->paginate(10),
+                'pager'          => $model->pager,
+                'completedCount' => $model->where('is_done', 1)->countAllResults(),
+                'pendingCount'   => $model->where('is_done', 0)->countAllResults(),
+            ];
+
+            return view('todo/index', $data);
+        }
 
     public function create()
     {
