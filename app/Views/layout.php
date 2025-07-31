@@ -7,9 +7,9 @@
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-light">
+<body class="d-flex flex-column min-vh-100 bg-light">
 
-  <!-- 🧭 Header -->
+  <!--  Header -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
     <div class="container">
       <a class="navbar-brand" href="/">📝 Todo App</a>
@@ -19,6 +19,13 @@
   <div class="container">
     <?= $this->renderSection('content') ?>
   </div>
+
+<!-- Sticky Footer -->
+<footer class="bg-white border-top py-3 text-center small text-muted mt-auto">
+  <div class="container">
+    Simple todo app built with ❤️ by <strong>Rameez Israr 🏇</strong>
+  </div>
+</footer>
 
 </body>
 </html>
