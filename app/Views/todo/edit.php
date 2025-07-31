@@ -1,15 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head><title>Edit Task</title></head>
-<body>
-    <h1>Edit Task</h1>
-    <form action="/todo/update/<?= $todo['id'] ?>" method="post">
-        <input type="text" name="task" value="<?= esc($todo['task']) ?>" required>
-        <label>
-            <input type="checkbox" name="is_done" value="1" <?= $todo['is_done'] ? 'checked' : '' ?>> Done
-        </label>
-        <button type="submit">Update</button>
-    </form>
-    <a href="/todo">Back to List</a>
-</body>
-</html>
+<?= $this->extend('layout') ?>
+<?= $this->section('content') ?>
+
+<h1 class="mb-4">✏️ Edit Task</h1>
+
+<form action="/todo/update/<?= $todo['id'] ?>" method="post">
+  <div class="mb-3">
+    <input type="text" name="task" class="form-control" value="<?= esc($todo['task']) ?>" required>
+  </div>
+  <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" name="is_done" value="1" <?= $todo['is_done'] ? 'checked' : '' ?>>
+    <label class="form-check-label">Mark as done</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Update</button>
+  <a href="/todo" class="btn btn-secondary">Back</a>
+</form>
+
+<?= $this->endSection() ?>
