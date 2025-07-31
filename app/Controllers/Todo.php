@@ -7,6 +7,10 @@ use CodeIgniter\Controller;
 
 class Todo extends Controller
 {
+    public function __construct()
+    {
+        helper(['time']);
+    }
     public function index()
     {
         $model = new TodoModel();
