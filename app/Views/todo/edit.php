@@ -3,6 +3,15 @@
 
 <h1 class="mb-4">✏️ Edit Task</h1>
 
+<?php if (isset($validation) && is_array($validation)): ?>
+  <div class="alert alert-danger">
+    <ul class="mb-0">
+      <?php foreach ($validation as $error): ?>
+        <li><?= esc($error) ?></li>
+      <?php endforeach; ?>
+    </ul>
+  </div>
+<?php endif; ?>
 <form action="/todo/update/<?= $todo['id'] ?>" method="post">
   <div class="mb-3">
     <input type="text" name="task" class="form-control" value="<?= esc($todo['task']) ?>" required>

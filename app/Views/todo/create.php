@@ -3,9 +3,18 @@
 
 <h1 class="mb-4">➕ Add New Task</h1>
 
+<?php if (isset($validation) && is_array($validation)): ?>
+  <div class="alert alert-danger">
+    <ul class="mb-0">
+      <?php foreach ($validation as $error): ?>
+        <li><?= esc($error) ?></li>
+      <?php endforeach; ?>
+    </ul>
+  </div>
+<?php endif; ?>
 <form action="/todo/store" method="post">
   <div class="mb-3">
-    <input type="text" name="task" class="form-control" placeholder="Enter task..." required>
+    <input type="text" name="task" class="form-control" placeholder="Enter task..." >
   </div>
   <button type="submit" class="btn btn-success">Save</button>
   <a href="/todo" class="btn btn-secondary">Back</a>
