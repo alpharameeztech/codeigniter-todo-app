@@ -8,11 +8,20 @@ use CodeIgniter\Controller;
 class Todo extends Controller
 {
     public function index()
-    {
-        $model = new TodoModel();
-        $data['todos'] = $model->orderBy('id', 'DESC')->findAll();
-        return view('todo/index', $data);
-    }
+{
+    $model = new TodoModel();
+
+    $todos = $model->orderBy('id', 'DESC')->findAll();
+    $completedCount = $model->where('is_done', 1)->countAllResults();
+    $pendingCount   = $model->where('is_done', 0)->countAllResults();
+
+    return view('todo/index', [
+        'todos' => $todos,
+        'completedCount' => $completedCount,
+        'pendingCount' => $pendingCount,
+    ]);
+}
+
 
     public function create()
     {
