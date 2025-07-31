@@ -17,7 +17,7 @@ class Todo extends Controller
 
     public function index()
     {
-        $pagination = $this->todo->getPaginated(10);
+        $pagination = $this->todo->getPaginated(5);
 
         return view('todo/index', [
             'todos' => $pagination['todos'],

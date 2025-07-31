@@ -1,68 +1,127 @@
-# CodeIgniter 4 Application Starter
+# 📝 CodeIgniter 4 Todo App
 
-## What is CodeIgniter?
+A clean and modern Todo app built with [CodeIgniter 4](https://codeigniter.com/) — showcasing CRUD functionality, charts, pagination, dark/light mode toggle, unit tests, and a sleek UI.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+![Todo App - Light Mode](/public/screenshots/todo-light.png)
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+---
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## 🚀 Features
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+- ✅ CRUD (Create, Read, Update, Delete) for todos
+- 📊 Chart.js dashboards (Doughnut, Bar, Horizontal Bar)
+- 🌙 Dark / ☀️ Light mode with localStorage support
+- 🧪 Unit Testing using PHPUnit + SQLite memory
+- 🧰 Server-side validation with CodeIgniter's validator
+- 📄 Pagination with custom Bootstrap UI
+- 📱 Responsive layout using Bootstrap 5
 
-## Installation & updates
+---
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+## 📦 Tech Stack
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+- PHP 8+
+- CodeIgniter 4
+- Bootstrap 5
+- Chart.js
+- PHPUnit
 
-## Setup
+---
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+## 📂 Project Structure
 
-## Important Change with index.php
+```
+codeigniter-project/
+├── app/
+│   ├── Controllers/
+│   ├── Models/
+│   ├── Services/
+│   ├── Views/
+├── public/
+│   └── screenshots/
+├── tests/
+│   └── app/Models/
+├── writable/
+├── .env
+└── README.md
+```
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+---
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+## ⚙️ Installation
 
-**Please** read the user guide for a better explanation of how CI4 works!
+```bash
+git clone https://github.com/your-username/codeigniter-todo-app.git
+cd codeigniter-todo-app
+composer install
+cp env .env
+php spark key:generate
+```
 
-## Repository Management
+Update `.env`:
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+```
+CI_ENVIRONMENT = development
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+database.default.hostname = 127.0.0.1
+database.default.database = your_db_name
+database.default.username = your_db_user
+database.default.password = your_db_pass
+```
 
-## Server Requirements
+Run migrations:
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+```bash
+php spark migrate
+```
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+Start local dev server:
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+```bash
+php spark serve
+```
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+Open: [http://localhost:8080/todo](http://localhost:8080/todo)
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+---
+
+## 🧪 Run Unit Tests
+
+```bash
+CI_ENVIRONMENT=testing ./vendor/bin/phpunit
+```
+
+Tests will run using an in-memory SQLite database.
+
+---
+
+## 🌗 Dark & Light Mode
+
+Easily toggle between light and dark themes using the 🌙 / ☀️ button in the top right. The theme preference is saved in your browser.
+
+![Theme Toggle Preview](public/screenshots/theme-toggle.gif)
+
+---
+
+## ✅ Feature Checklist
+
+- [x] Task creation & validation
+- [x] Editable task with is_done toggle
+- [x] Delete with confirmation
+- [x] Statistics with Chart.js
+- [x] Server-side validation
+- [x] Pagination with Bootstrap styling
+- [x] Dark/Light mode toggle
+- [x] Footer & human-readable timestamps
+
+---
+
+## 🙌 Credits
+
+Developed by [**Rameez Israr**](https://github.com/krameez56) with 💙 and 🏇.
+
+---
+
+## 📄 License
+
+Open source under the [MIT License](LICENSE).
