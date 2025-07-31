@@ -10,15 +10,29 @@ class TodoModelTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected $refresh = true;  // Rebuild database before each test
+    protected $refresh   = true;
     protected $namespace = 'App';
 
     public function testCreateTodo()
     {
         $model = new TodoModel();
-        $id = $model->insert(['task' => 'Unit Test Task']);
+
+        $data = ['task' => 'Unit Test Task'];
+        $id   = $model->insert($data);
+
         $this->assertIsInt($id);
         $this->assertGreaterThan(0, $id);
+    }
+
+    public function testValidationFailsOnEmptyTask()
+    {
+        $model = new TodoModel();
+
+        $model->insert(['task' => '']); // should fail
+        $errors = $model->errors();
+
+        $this->assertIsArray($errors);
+        $this->assertArrayHasKey('task', $errors);
     }
 
     public function testReadTodo()
@@ -26,6 +40,7 @@ class TodoModelTest extends CIUnitTestCase
         $model = new TodoModel();
         $id = $model->insert(['task' => 'Read Test']);
         $task = $model->find($id);
+
         $this->assertEquals('Read Test', $task['task']);
     }
 
@@ -33,9 +48,10 @@ class TodoModelTest extends CIUnitTestCase
     {
         $model = new TodoModel();
         $id = $model->insert(['task' => 'Before Update']);
-        $model->update($id, ['task' => 'After Update']);
 
+        $model->update($id, ['task' => 'After Update']);
         $updated = $model->find($id);
+
         $this->assertEquals('After Update', $updated['task']);
     }
 
@@ -43,6 +59,7 @@ class TodoModelTest extends CIUnitTestCase
     {
         $model = new TodoModel();
         $id = $model->insert(['task' => 'Delete Me']);
+
         $model->delete($id);
         $this->assertNull($model->find($id));
     }
