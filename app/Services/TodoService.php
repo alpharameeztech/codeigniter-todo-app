@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\TodoModel;
 use App\Interfaces\TodoInterface;
+use App\Models\TodoModel;
 
 class TodoService implements TodoInterface
 {
@@ -14,14 +14,22 @@ class TodoService implements TodoInterface
         $this->model = new TodoModel();
     }
 
-    public function getAll()
+    public function getPaginated(int $perPage = 10)
     {
-        return $this->model->orderBy('id', 'DESC')->findAll();
+        return [
+            'todos' => $this->model->orderBy('id', 'DESC')->paginate($perPage),
+            'pager' => $this->model->pager,
+        ];
     }
 
-    public function create(array $data): bool
+    public function countCompleted(): int
     {
-        return $this->model->save($data);
+        return $this->model->where('is_done', 1)->countAllResults();
+    }
+
+    public function countPending(): int
+    {
+        return $this->model->where('is_done', 0)->countAllResults();
     }
 
     public function find(int $id)
@@ -29,10 +37,22 @@ class TodoService implements TodoInterface
         return $this->model->find($id);
     }
 
+    public function create(array $data): bool
+    {
+        if (!$this->model->save($data)) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function update(int $id, array $data): bool
     {
-        $data['id'] = $id;
-        return $this->model->save($data);
+        if (!$this->model->update($id, $data)) {
+            return false;
+        }
+
+        return true;
     }
 
     public function delete(int $id): bool
@@ -40,17 +60,8 @@ class TodoService implements TodoInterface
         return $this->model->delete($id);
     }
 
-    public function getStats(): array
-    {
-        return [
-            'completed' => $this->model->where('is_done', 1)->countAllResults(),
-            'pending'   => $this->model->where('is_done', 0)->countAllResults(),
-        ];
-    }
-
     public function getErrors(): array
     {
-        return $this->model->errors() ?? [];
+        return $this->model->errors();
     }
-
 }

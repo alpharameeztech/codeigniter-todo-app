@@ -2,33 +2,30 @@
 
 namespace App\Controllers;
 
-use App\Services\TodoService;
+use App\Interfaces\TodoInterface;
 use CodeIgniter\Controller;
-use App\Models\TodoModel;
 
 class Todo extends Controller
 {
-    protected $todo;
+    protected TodoInterface $todo;
 
     public function __construct()
     {
         helper(['form', 'time']);
-        $this->todo = new TodoService();
+        $this->todo = service('todo'); 
     }
 
     public function index()
-        {
-            $model = new TodoModel();
+    {
+        $pagination = $this->todo->getPaginated(10);
 
-            $data = [
-                'todos'          => $model->orderBy('id', 'DESC')->paginate(10),
-                'pager'          => $model->pager,
-                'completedCount' => $model->where('is_done', 1)->countAllResults(),
-                'pendingCount'   => $model->where('is_done', 0)->countAllResults(),
-            ];
-
-            return view('todo/index', $data);
-        }
+        return view('todo/index', [
+            'todos' => $pagination['todos'],
+            'pager' => $pagination['pager'],
+            'completedCount' => $this->todo->countCompleted(),
+            'pendingCount' => $this->todo->countPending(),
+        ]);
+    }
 
     public function create()
     {
@@ -65,7 +62,7 @@ class Todo extends Controller
         if (!$this->todo->update($id, $data)) {
             return view('todo/edit', [
                 'todo' => $this->todo->find($id),
-                'validation' => (new \App\Models\TodoModel())->errors(),
+                'validation' => $this->todo->getErrors()
             ]);
         }
 
