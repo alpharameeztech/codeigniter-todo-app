@@ -5,7 +5,6 @@
 
 <a href="/todo/create" class="btn btn-primary mb-3">+ Add Task</a>
 
-<!-- Chart Section -->
 <!-- 📊 Charts Row -->
 <div class="row mb-5 text-center">
   <!-- Doughnut Chart -->
@@ -13,7 +12,9 @@
     <div class="card shadow-sm">
       <div class="card-body">
         <h6 class="card-title">Completion Stats</h6>
-        <canvas id="doughnutChart"></canvas>
+        <div style="position: relative; height: 300px;">
+          <canvas id="doughnutChart"></canvas>
+        </div>
       </div>
     </div>
   </div>
@@ -23,7 +24,9 @@
     <div class="card shadow-sm">
       <div class="card-body">
         <h6 class="card-title">Task Breakdown</h6>
-        <canvas id="barChart"></canvas>
+        <div style="position: relative; height: 300px;">
+          <canvas id="barChart"></canvas>
+        </div>
       </div>
     </div>
   </div>
@@ -33,7 +36,9 @@
     <div class="card shadow-sm">
       <div class="card-body">
         <h6 class="card-title">Overview</h6>
-        <canvas id="horizontalChart"></canvas>
+        <div style="position: relative; height: 300px;">
+          <canvas id="horizontalChart"></canvas>
+        </div>
       </div>
     </div>
   </div>
