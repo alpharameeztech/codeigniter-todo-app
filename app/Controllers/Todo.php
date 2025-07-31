@@ -2,24 +2,26 @@
 
 namespace App\Controllers;
 
-use App\Models\TodoModel;
+use App\Services\TodoService;
 use CodeIgniter\Controller;
 
 class Todo extends Controller
 {
+    protected $todo;
+
     public function __construct()
     {
-        helper(['time']);
+        helper(['form', 'time']);
+        $this->todo = new TodoService();
     }
+
     public function index()
     {
-        $model = new TodoModel();
-
-        $todos = $model->orderBy('id', 'DESC')->findAll();
-        $completedCount = $model->where('is_done', 1)->countAllResults();
-        $pendingCount   = $model->where('is_done', 0)->countAllResults();
-
-        return view('todo/index', compact('todos', 'completedCount', 'pendingCount'));
+        return view('todo/index', [
+            'todos' => $this->todo->getAll(),
+            'completedCount' => $this->todo->getStats()['completed'],
+            'pendingCount'   => $this->todo->getStats()['pending'],
+        ]);
     }
 
     public function create()
@@ -29,14 +31,11 @@ class Todo extends Controller
 
     public function store()
     {
-        helper(['form']);
-        $model = new TodoModel();
-
         $data = ['task' => $this->request->getPost('task')];
 
-        if (!$model->save($data)) {
+        if (!$this->todo->create($data)) {
             return view('todo/create', [
-                'validation' => $model->errors()
+                'validation' => $this->todo->getErrors()
             ]);
         }
 
@@ -45,30 +44,22 @@ class Todo extends Controller
 
     public function edit($id)
     {
-        $model = new TodoModel();
-        $todo = $model->find($id);
-
-        if (!$todo) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException("Task with ID $id not found.");
-        }
-
-        return view('todo/edit', ['todo' => $todo]);
+        return view('todo/edit', [
+            'todo' => $this->todo->find($id),
+        ]);
     }
 
     public function update($id)
     {
-        $model = new TodoModel();
-
         $data = [
-            'id'       => $id,
-            'task'     => $this->request->getPost('task'),
-            'is_done'  => $this->request->getPost('is_done') ? 1 : 0,
+            'task' => $this->request->getPost('task'),
+            'is_done' => $this->request->getPost('is_done') ? 1 : 0,
         ];
 
-        if (!$model->save($data)) {
+        if (!$this->todo->update($id, $data)) {
             return view('todo/edit', [
-                'todo'       => $model->find($id),
-                'validation' => $model->errors(),
+                'todo' => $this->todo->find($id),
+                'validation' => (new \App\Models\TodoModel())->errors(),
             ]);
         }
 
@@ -77,8 +68,7 @@ class Todo extends Controller
 
     public function delete($id)
     {
-        $model = new TodoModel();
-        $model->delete($id);
+        $this->todo->delete($id);
         return redirect()->to('/todo')->with('message', 'Task deleted!');
     }
 }
