@@ -116,7 +116,7 @@ Easily toggle between light and dark themes using the 🌙 / ☀️ button in th
 
 ## 🙌 Credits
 
-Developed by [**Rameez Israr**](https://github.com/krameez56) with 💙 and 🏇.
+Developed with 💙 by [**Rameez Israr**](https://github.com/alpharameeztech) 🏇
 
 ---
 
