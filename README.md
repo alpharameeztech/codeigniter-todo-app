@@ -91,15 +91,13 @@ Open: [http://localhost:8080/todo](http://localhost:8080/todo)
 CI_ENVIRONMENT=testing ./vendor/bin/phpunit
 ```
 
-Tests will run using an in-memory SQLite database.
-
 ---
 
 ## 🌗 Dark & Light Mode
 
 Easily toggle between light and dark themes using the 🌙 / ☀️ button in the top right. The theme preference is saved in your browser.
 
-![Theme Toggle Preview](public/screenshots/theme-toggle.gif)
+![Theme Toggle Preview](/public/screenshots/mode.png)
 
 ---
 
@@ -112,7 +110,7 @@ Easily toggle between light and dark themes using the 🌙 / ☀️ button in th
 - [x] Server-side validation
 - [x] Pagination with Bootstrap styling
 - [x] Dark/Light mode toggle
-- [x] Footer & human-readable timestamps
+- [x] Footer
 
 ---
 
